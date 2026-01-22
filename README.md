@@ -10,7 +10,7 @@ A lightweight skills library for [oh-my-opencode](https://github.com/code-yeongy
 |-------|---------|
 | `omobwd:brainstorming` | Conversational requirement clarification with optional design document output |
 | `omobwd:write-docs` | Generate oh-my-opencode compliant documentation |
-| `omobwd:do` | Intelligent task routing and execution supervision (supports `/ulw` integration) |
+| `omobwd:do` | Intelligent task routing and execution supervision (supports ultrawork mode) |
 
 ## Installation
 
@@ -72,7 +72,7 @@ use_omobwd_skill omobwd:do
 do will automatically orchestrate:
 1. Call brainstorming to clarify requirements
 2. Prompt user to call write-docs to generate design documents
-3. Ask if user wants to use `/ulw` (ultrawork) for development
+3. Ask if user wants to use ultrawork mode for development
 4. Verify file format correctness
 
 ## Project Structure
@@ -107,7 +107,7 @@ omobwd/
 ┌─────────────────────────────────────────┐
 │              omobwd:do                  │
 │  (Intelligent Routing + Supervision)    │
-│         + /ulw Integration              │
+│       + ultrawork Integration           │
 └──────────┬───────────────┬──────────────┘
            │               │
            ▼               ▼
@@ -120,7 +120,7 @@ omobwd/
 
 - **brainstorming** and **write-docs** can be used independently
 - **brainstorming** prompts user to call **write-docs** for design documents
-- **do** serves as orchestrator, invoking other skills and `/ulw` as needed
+- **do** serves as orchestrator, invoking other skills and ultrawork mode as needed
 
 ## Compatibility
 

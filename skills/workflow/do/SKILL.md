@@ -2,7 +2,7 @@
 name: do
 description: 智能任务路由与执行监督，分发任务给合适的 agent，验证结果，处理失败
 when_to_use: 当需要在 oh-my-opencode 中执行具体任务时
-version: 1.1.0
+version: 1.2.0
 ---
 
 # Do - 智能任务执行器
@@ -49,7 +49,7 @@ version: 1.1.0
 | 架构决策 | `oracle` agent | "这两种方案哪个好" |
 | UI/样式修改 | `frontend-ui-ux-engineer` | "改一下按钮颜色" |
 | 文档编写 | `document-writer` | "写个 README" |
-| 开发任务 | 询问是否使用 `/ulw` | "实现这个功能" |
+| 开发任务 | 询问是否使用 ultrawork | "实现这个功能" |
 | 直接执行 | 内置工具 | "运行测试" |
 
 ### 3. 任务分发
@@ -58,13 +58,31 @@ version: 1.1.0
 
 当任务需要实际编码/开发执行时，询问用户：
 
-> 需要执行开发任务。是否使用 oh-my-opencode 的 `/ulw` (ultrawork) 来执行？
-> A) 是 - 使用 /ulw 执行
+> 需要执行开发任务。是否使用 oh-my-opencode 的 ultrawork 模式来执行？
+> A) 是 - 使用 ultrawork 执行
 > B) 否 - 当前 agent 直接执行
 
 根据用户选择：
-- A → 调用 `/ulw` 命令执行开发任务
+- A → 使用 ultrawork 模式执行（见下方说明）
 - B → 使用内置工具或 agents 直接执行
+
+**Ultrawork 模式调用方式**：
+
+ultrawork 不是斜杠命令，而是 oh-my-opencode 的关键词触发模式。
+调用方式是在 prompt 开头加入 `ulw` 关键词：
+
+```
+ulw <任务描述>
+```
+
+示例：
+```
+ulw 根据设计文档实现用户认证模块
+ulw 重构这个组件使用 React Hooks
+```
+
+oh-my-opencode 的 keyword-detector hook 会检测到 `ulw` 或 `ultrawork` 关键词，
+自动注入高强度执行指令，启用并行 agent 协作模式。
 
 **单步任务**：直接调用目标执行者
 
@@ -169,5 +187,5 @@ do：
 - 可调用 `omobwd:brainstorming` 澄清需求
 - 可调用 `omobwd:write-docs` 生成文档
 - 可调用所有 oh-my-opencode agents
-- 可调用 `/ulw` (ultrawork) 执行开发任务
+- 可通过 `ulw` 关键词触发 ultrawork 模式执行开发任务
 - 是其他技能的编排入口

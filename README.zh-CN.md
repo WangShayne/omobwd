@@ -10,7 +10,7 @@
 |------|------|
 | `omobwd:brainstorming` | 对话式需求澄清，可选输出设计文档 |
 | `omobwd:write-docs` | 生成 oh-my-opencode 规范文档 |
-| `omobwd:do` | 智能任务路由与执行监督（支持 `/ulw` 集成）|
+| `omobwd:do` | 智能任务路由与执行监督（支持 ultrawork 模式）|
 
 ## 安装
 
@@ -72,7 +72,7 @@ use_omobwd_skill omobwd:do
 do 会自动编排：
 1. 调用 brainstorming 澄清需求
 2. 提示用户调用 write-docs 生成设计文档
-3. 询问用户是否使用 `/ulw` (ultrawork) 执行开发
+3. 询问用户是否使用 ultrawork 模式执行开发
 4. 验证文件格式正确
 
 ## 项目结构
@@ -107,7 +107,7 @@ omobwd/
 ┌─────────────────────────────────────────┐
 │              omobwd:do                  │
 │         (智能路由 + 监督)                │
-│         + /ulw 集成                     │
+│       + ultrawork 集成                  │
 └──────────┬───────────────┬──────────────┘
            │               │
            ▼               ▼
@@ -120,7 +120,7 @@ omobwd/
 
 - **brainstorming** 和 **write-docs** 可独立使用
 - **brainstorming** 完成后提示用户调用 **write-docs** 生成设计文档
-- **do** 作为编排器，按需调用其他技能和 `/ulw`
+- **do** 作为编排器，按需调用其他技能和 ultrawork 模式
 
 ## 兼容性
 
