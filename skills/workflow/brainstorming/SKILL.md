@@ -1,11 +1,11 @@
 ---
-name: brainstorm
+name: brainstorming
 description: 通过对话探索想法，澄清需求，可选输出设计文档
 when_to_use: 当开始新功能、不确定实现方向、或需要理清思路时
-version: 1.0.0
+version: 1.1.0
 ---
 
-# Brainstorm - 头脑风暴
+# Brainstorming - 头脑风暴
 
 通过自然对话帮助用户将模糊想法转化为清晰的设计方案。
 
@@ -66,13 +66,17 @@ version: 1.0.0
 - 错误处理
 - 测试策略
 
-### 4. 输出阶段（可选）
+### 4. 输出阶段
+
+当设计方案收敛确定后，**主动提示用户**：
+
+> 设计方案已明确。建议调用 `omobwd:write-docs` 将方案写入项目设计文档。
 
 根据用户意愿选择后续动作：
 
 | 用户说 | 动作 |
 |--------|------|
-| "生成文档" | 写入 `docs/plans/YYYY-MM-DD-<topic>.md` |
+| "生成文档" / "好的" | 调用 `omobwd:write-docs` 生成项目设计文档 |
 | "继续实现" | 调用 `omobwd:do` 开始执行 |
 | "就这样" | 结束对话，结论留在对话中 |
 
@@ -108,5 +112,5 @@ version: 1.0.0
 
 - 可独立使用，不依赖其他技能
 - 可被 `omobwd:do` 调用（当任务需要澄清时）
-- 完成后可调用 `omobwd:write-docs` 生成文档
+- 完成后**建议调用** `omobwd:write-docs` 生成项目设计文档
 - 完成后可调用 `omobwd:do` 开始实现

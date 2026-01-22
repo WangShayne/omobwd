@@ -29,9 +29,9 @@ export const OmobwdPlugin = async ({ client, directory }) => {
   return {
     tool: {
       use_omobwd_skill: tool({
-        description: 'Load omobwd skills (brainstorm, write-docs, do) for development workflow.',
+        description: 'Load omobwd skills (brainstorming, write-docs, do) for development workflow.',
         args: {
-          skill_name: tool.schema.string().describe('Name of the omobwd skill (e.g., "omobwd:brainstorm", "omobwd:do", "omobwd:write-docs")')
+          skill_name: tool.schema.string().describe('Name of the omobwd skill (e.g., "omobwd:brainstorming", "omobwd:do", "omobwd:write-docs")')
         },
         execute: async (args, context) => {
           const { skill_name } = args;
@@ -52,6 +52,15 @@ export const OmobwdPlugin = async ({ client, directory }) => {
               path.join(omobwdSkillsDir, 'workflow', actualSkillName),
               path.join(omobwdSkillsDir, 'documentation', actualSkillName)
             ];
+
+            // Also check for 'brainstorming' when 'brainstorm' is requested (backward compat)
+            const aliasMap = { 'brainstorm': 'brainstorming' };
+            if (aliasMap[actualSkillName]) {
+              nestedPaths.unshift(
+                path.join(omobwdSkillsDir, 'workflow', aliasMap[actualSkillName]),
+                path.join(omobwdSkillsDir, 'documentation', aliasMap[actualSkillName])
+              );
+            }
 
             for (const nestedPath of nestedPaths) {
               const skillFile = path.join(nestedPath, 'SKILL.md');
@@ -85,7 +94,7 @@ export const OmobwdPlugin = async ({ client, directory }) => {
               }
             }
 
-            return `Error: Skill "${skill_name}" not found.\n\nAvailable omobwd skills:\n- omobwd:brainstorm\n- omobwd:write-docs\n- omobwd:do`;
+            return `Error: Skill "${skill_name}" not found.\n\nAvailable omobwd skills:\n- omobwd:brainstorming\n- omobwd:write-docs\n- omobwd:do`;
           }
 
           const fullContent = fs.readFileSync(resolved.skillFile, 'utf8');

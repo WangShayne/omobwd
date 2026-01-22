@@ -2,7 +2,7 @@
 name: do
 description: 智能任务路由与执行监督，分发任务给合适的 agent，验证结果，处理失败
 when_to_use: 当需要在 oh-my-opencode 中执行具体任务时
-version: 1.0.0
+version: 1.1.0
 ---
 
 # Do - 智能任务执行器
@@ -34,7 +34,7 @@ version: 1.0.0
 - 是单步还是多步任务？
 - 有无依赖关系？
 
-如果任务不清晰，调用 `omobwd:brainstorm` 澄清。
+如果任务不清晰，调用 `omobwd:brainstorming` 澄清。
 
 ### 2. 路由决策
 
@@ -42,16 +42,29 @@ version: 1.0.0
 
 | 任务类型 | 路由目标 | 示例 |
 |----------|----------|------|
-| 需要澄清需求 | `omobwd:brainstorm` | "我想加个功能但还没想好" |
+| 需要澄清需求 | `omobwd:brainstorming` | "我想加个功能但还没想好" |
 | 需要创建文档 | `omobwd:write-docs` | "帮我写个技能文件" |
 | 代码探索 | `explore` agent | "找到处理认证的代码" |
 | 外部文档查询 | `librarian` agent | "查一下这个库怎么用" |
 | 架构决策 | `oracle` agent | "这两种方案哪个好" |
 | UI/样式修改 | `frontend-ui-ux-engineer` | "改一下按钮颜色" |
 | 文档编写 | `document-writer` | "写个 README" |
+| 开发任务 | 询问是否使用 `/ulw` | "实现这个功能" |
 | 直接执行 | 内置工具 | "运行测试" |
 
 ### 3. 任务分发
+
+**开发任务执行前询问**：
+
+当任务需要实际编码/开发执行时，询问用户：
+
+> 需要执行开发任务。是否使用 oh-my-opencode 的 `/ulw` (ultrawork) 来执行？
+> A) 是 - 使用 /ulw 执行
+> B) 否 - 当前 agent 直接执行
+
+根据用户选择：
+- A → 调用 `/ulw` 命令执行开发任务
+- B → 使用内置工具或 agents 直接执行
 
 **单步任务**：直接调用目标执行者
 
@@ -91,7 +104,7 @@ version: 1.0.0
        │
        └── 根本性问题
            └── 停止并报告
-           └── 建议调用 brainstorm 重新思考
+            └── 建议调用 brainstorming 重新思考
 ```
 
 ### 6. 进度追踪
@@ -145,15 +158,16 @@ do：
 
 do：
   1. 识别：需要完整流程
-  2. 调用 omobwd:brainstorm 澄清需求
-  3. brainstorm 完成后，调用 omobwd:write-docs 生成文件
+  2. 调用 omobwd:brainstorming 澄清需求
+  3. brainstorming 完成后，调用 omobwd:write-docs 生成文件
   4. 验证文件格式
   5. 报告完成
 ```
 
 ## 与其他技能的关系
 
-- 可调用 `omobwd:brainstorm` 澄清需求
+- 可调用 `omobwd:brainstorming` 澄清需求
 - 可调用 `omobwd:write-docs` 生成文档
 - 可调用所有 oh-my-opencode agents
+- 可调用 `/ulw` (ultrawork) 执行开发任务
 - 是其他技能的编排入口

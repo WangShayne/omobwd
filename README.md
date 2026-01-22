@@ -8,9 +8,9 @@ A lightweight skills library for [oh-my-opencode](https://github.com/code-yeongy
 
 | Skill | Purpose |
 |-------|---------|
-| `omobwd:brainstorm` | Conversational requirement clarification with optional design document output |
+| `omobwd:brainstorming` | Conversational requirement clarification with optional design document output |
 | `omobwd:write-docs` | Generate oh-my-opencode compliant documentation |
-| `omobwd:do` | Intelligent task routing and execution supervision |
+| `omobwd:do` | Intelligent task routing and execution supervision (supports `/ulw` integration) |
 
 ## Installation
 
@@ -55,7 +55,7 @@ find_omobwd_skills
 ### Direct Invocation
 
 ```
-use_omobwd_skill omobwd:brainstorm
+use_omobwd_skill omobwd:brainstorming
 use_omobwd_skill omobwd:write-docs
 use_omobwd_skill omobwd:do
 ```
@@ -70,9 +70,10 @@ use_omobwd_skill omobwd:do
 ### Chained Invocation
 
 do will automatically orchestrate:
-1. Call brainstorm to clarify requirements
-2. Call write-docs to generate SKILL.md
-3. Verify file format correctness
+1. Call brainstorming to clarify requirements
+2. Prompt user to call write-docs to generate design documents
+3. Ask if user wants to use `/ulw` (ultrawork) for development
+4. Verify file format correctness
 
 ## Project Structure
 
@@ -85,7 +86,7 @@ omobwd/
 │   └── skills-core.js          # Skills discovery core library
 ├── skills/
 │   ├── workflow/
-│   │   ├── brainstorm/SKILL.md
+│   │   ├── brainstorming/SKILL.md
 │   │   └── do/SKILL.md
 │   └── documentation/
 │       └── write-docs/SKILL.md
@@ -105,18 +106,21 @@ omobwd/
 ```
 ┌─────────────────────────────────────────┐
 │              omobwd:do                  │
-│      (Intelligent Routing + Supervision)│
+│  (Intelligent Routing + Supervision)    │
+│         + /ulw Integration              │
 └──────────┬───────────────┬──────────────┘
            │               │
            ▼               ▼
 ┌──────────────────┐ ┌──────────────────┐
-│ omobwd:brainstorm│ │ omobwd:write-docs│
-│ (Clarification)  │ │ (Doc Generation) │
+│omobwd:brainstorm-│ │ omobwd:write-docs│
+│      ing         │ │ (Doc Generation) │
+│ (Clarification)  │ │                  │
 └──────────────────┘ └──────────────────┘
 ```
 
-- **brainstorm** and **write-docs** can be used independently
-- **do** serves as orchestrator, invoking other skills as needed
+- **brainstorming** and **write-docs** can be used independently
+- **brainstorming** prompts user to call **write-docs** for design documents
+- **do** serves as orchestrator, invoking other skills and `/ulw` as needed
 
 ## Compatibility
 
