@@ -2,7 +2,7 @@
 name: do
 description: 智能任务路由与执行监督，分发任务给合适的 agent，验证结果，处理失败
 when_to_use: 当需要在 oh-my-opencode 中执行具体任务时
-version: 1.2.0
+version: 1.3.0
 ---
 
 # Do - 智能任务执行器
@@ -69,20 +69,30 @@ version: 1.2.0
 **Ultrawork 模式调用方式**：
 
 ultrawork 不是斜杠命令，而是 oh-my-opencode 的关键词触发模式。
-调用方式是在 prompt 开头加入 `ulw` 关键词：
 
+**重要**：当用户选择 ultrawork 模式时，必须**立即开始执行任务**，而不是只输出带 `ulw` 的文本。
+
+正确的执行方式：
+1. 在后续的工作消息中，以 `ulw` 关键词开头
+2. **立即开始实际的开发工作**：创建文件、编写代码、运行命令
+3. oh-my-opencode 的 keyword-detector hook 会检测到关键词并激活高强度模式
+
+错误的方式（不要这样做）：
 ```
-ulw <任务描述>
+# 错误：只输出文本，不执行任何操作
+ulw 根据设计文档实现功能...
+（然后什么都不做）
 ```
 
-示例：
+正确的方式：
 ```
-ulw 根据设计文档实现用户认证模块
-ulw 重构这个组件使用 React Hooks
-```
+ulw 开始实现功能
 
-oh-my-opencode 的 keyword-detector hook 会检测到 `ulw` 或 `ultrawork` 关键词，
-自动注入高强度执行指令，启用并行 agent 协作模式。
+（立即开始执行）
+1. 创建 todo list
+2. 使用 Write 工具创建第一个文件
+3. 继续执行后续步骤...
+```
 
 **单步任务**：直接调用目标执行者
 
