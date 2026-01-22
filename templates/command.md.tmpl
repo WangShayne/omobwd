@@ -1,0 +1,43 @@
+---
+name: {{name}}
+description: {{description}}
+version: 1.0.0
+---
+
+# /{{name}}
+
+{{overview}}
+
+## 用法
+
+```
+/{{name}} {{arguments}}
+```
+
+## 参数
+
+| 参数 | 必填 | 描述 |
+|------|------|------|
+{{parameters}}
+
+## 模板
+
+```
+{{template}}
+```
+
+## 示例
+
+{{examples}}
+
+## 配置选项
+
+```yaml
+commands:
+  {{name}}:
+    template: "{{template_short}}"
+    description: "{{description}}"
+    {{#agent}}
+    agent: {{agent}}
+    {{/agent}}
+```
